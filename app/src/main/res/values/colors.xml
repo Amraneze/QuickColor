@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--Common-->
+    <color name="background">#E6000000</color>
+
+    <color name="transparent">#00000000</color>
+    <color name="white_menu_transparent">#aaffffff</color>
+    <color name="white">#FFFFFF</color>
+    <color name="scrim">#42000000</color>
+    <color name="black">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="common_gray_bg">#f6f6f6</color>
+    <color name="common_gray">#666666</color>
+    <color name="common_gray_deep">#333333</color>
+    <color name="common_gray_lite">#999999</color>
+    <color name="grey_text_color">#4d4d4d</color>
+    <color name="grey_ad">#adadad</color>
+    <color name="grey_ad_translucent">#AAadadad</color>
+    <color name="grey_ee">#eeeeee</color>
+    <color name="main_color">#36a6e7</color>
+    <color name="main_color_light">#03c5f2</color>
+    <color name="main_color_deep">#0171c9</color>
+    <color name="pressed_grey">#FF888888</color>
+
+    <!--Business-->
+    <color name="action_bar_color">#36a6e7</color>
+    <color name="split_border_color">#DCDCDC</color>
+    <color name="item_pressed_color">#ececec</color>
+    <color name="item_normal_color">#FFFFFF</color>
+
+    <color name="path_primary">#E62F17</color>
+
+    <color name="arc_path_red_color">#ff0000</color>
+    <color name="arc_path_yellow_color">#eeee00</color>
+    <color name="arc_path_green_color">#7fff00</color>
+    <color name="arc_path_black_color">#3d3d3d</color>
+    <color name="arc_path_brown_color">#cd6839</color>
+    <color name="arc_path_blue_color">#1e90ff</color>
+    <color name="arc_path_violet_color">#a020f0</color>
+
+    <color name="state_normal_color">#98FB98</color>
+    <color name="state_waring_color">#EE3B3B</color>
+
+    <color name="plot_background_color">#454545</color>
+    <color name="plot_line_color">#98FB98</color>
+
+
+    <color name="color_ecg">#6ad195</color>
+    <color name="color_oxy">#48C9E9</color>
+    <color name="color_bpm">#d0021b</color>
+    <color name="color_bpm_disabled">#ec5d68</color>
+    <color name="color_bpm_pressed">#701017</color>
+    <color name="color_profile_blue">#34C5F0</color>
+    <color name="color_thermo">#2c3b88</color>
+    <color name="color_thermo_dashboard">#ffffff</color>
+    <color name="thermo_pressed">#1d2658</color>
+    <color name="grading.green">#50e588</color>
+    <color name="grading.orange">#ffab33</color>
+    <color name="grading.red">#e30613</color>
+    <color name="snack_success_color">#42a80a</color>
+    <color name="snack_error_color">#e30613</color>
+
+    <color name="primaryColor">#2c3b88</color>
+    <color name="primaryColorTransparent">#442c3b88</color>
+    <color name="primaryColorDark">#171F48</color>
+    <color name="accentColor">#2c3b88</color>
+    <color name="accentColorDisabled">#FF5D658C</color>
+    <color name="white_1">#fafaf9</color>
+    <color name="white_translucent">#9fffffff</color>
+    <color name="white_less_translucent">#efffffff</color>
+    <color name="tensio.fab">#d0021b</color>
+    <color name="oxy.fab">#4a90e2</color>
+    <color name="thermo.fab">#2c3b88</color>
+    <color name="ecg.fab">#6ad195</color>
+    <color name="gluco.fab">#a11a16</color>
+
+    <color name="color_oxy_new">#528AC8</color>
+
+    <!--Sprint18-->
+    <color name="transparent_white_85">#D9ffffff</color>
+</resources>
