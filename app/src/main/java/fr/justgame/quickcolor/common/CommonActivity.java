@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Explode;
@@ -24,8 +25,6 @@ public class CommonActivity extends Activity implements View.OnClickListener {
 
     public static final int DELAY_TUTORIAL = 500;
 
-    protected boolean screenSeen;
-
     @Nullable
     @BindView(R.id.toolbar)
     protected Toolbar toolbar;
@@ -36,31 +35,11 @@ public class CommonActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
-        /*if (!(this instanceof SplashActivity)) {
-            appMode = AppMode.get();
-        }*/
-
         operationHandler = new Handler();
-
-        /*if (getLayoutResId() != View.NO_ID) {
-            setContentView(getLayoutResId());
-            ButterKnife.bind(this);
-            if (toolbar != null) {
-                toolbar.setContentInsetStartWithNavigation(0);
-                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onBackPressed();
-                    }
-                });
-            }
-        }*/
+        //ButterKnife.bind(this);
     }
 
     @Override

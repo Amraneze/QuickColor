@@ -26,6 +26,6 @@ public class JustifiedTextView extends com.uncopt.android.widget.text.justify.Ju
 
 
     private void init() {
-        setTypeface(FontManager.INSTANCE.getTypeFace(getContext(), FontManager.Style.REGULAR));
+        setTypeface(FontManager.INSTANCE.getTypeFace(getContext(), FontManager.Style.FILBERT_BRUSH));
     }
 }

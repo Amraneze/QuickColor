@@ -96,6 +96,8 @@ dependencies {
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
     //Or this one https://github.com/TakuSemba/Spotlight
     compile 'com.github.takusemba:spotlight:1.0.1'
+    compile 'com.skyfishjy.ripplebackground:library:1.0.1'
+
 
     //For settings https://github.com/sjwall/MaterialTapTargetPrompt
     compile 'uk.co.samuelwall:material-tap-target-prompt:1.11.0'

@@ -21,6 +21,16 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name="fr.justgame.quickcolor.game.TutorialActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name="fr.justgame.quickcolor.game.ui.TimerActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

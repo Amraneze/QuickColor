@@ -17,7 +17,7 @@ public class CommonButton extends Button {
 
     public CommonButton(Context context) {
         super(context);
-        style = FontManager.Style.FUTURA_MEDIUM;
+        style = FontManager.Style.FILBERT_BRUSH;
         init();
     }
 
@@ -41,7 +41,7 @@ public class CommonButton extends Button {
 
     private void parseAttributes(AttributeSet attrs){
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.CommonTextView, 0, 0);
-        style = a.getInt(R.styleable.CommonTextView_font_style, FontManager.Style.FUTURA_MEDIUM);
+        style = a.getInt(R.styleable.CommonTextView_font_style, FontManager.Style.FILBERT_BRUSH);
         a.recycle();
     }
 

@@ -14,7 +14,7 @@ import fr.justgame.quickcolor.R;
 
 public class CommonEditText extends android.support.v7.widget.AppCompatEditText {
 
-    private static final int DEFAULT_FONT = FontManager.Style.REGULAR;
+    private static final int DEFAULT_FONT = FontManager.Style.FILBERT_BRUSH;
 
     private int style;
     private boolean hideHintOnTap;
