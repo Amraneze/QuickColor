@@ -1,5 +1,6 @@
 package fr.justgame.quickcolor.common;
 
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.app.Activity;
 import android.content.Context;
@@ -14,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 
+import butterknife.BindView;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.ui.CommonTextView;
 import fr.justgame.quickcolor.game.StartGameActivity;
@@ -24,8 +26,13 @@ import fr.justgame.quickcolor.game.StartGameActivity;
 
 public abstract class MainGameActivity extends Activity implements View.OnClickListener {
 
-    protected CommonTextView pointsTextView, levelTextView;
-    protected ProgressBar timerProgress;
+    @BindView(R.id.progress_bar)
+    ProgressBar timerProgress;
+    @BindView(R.id.tv_score_point)
+    CommonTextView pointsTextView;
+
+    //protected CommonTextView pointsTextView, levelTextView;
+    //protected ProgressBar timerProgress;
     protected AnimatorSet pointAnim, levelAnim;
 
     protected int level, points;
@@ -59,25 +66,9 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     }
 
     protected void setupProgressView() {
-        /*timerProgress = (ProgressBar) findViewById(R.id.progress_bar);
-        pointsTextView = (TextView) findViewById(R.id.points_value);
-        levelTextView = (TextView) findViewById(R.id.level_value);
-        TextView pointsLabel = (TextView) findViewById(R.id.points_label);
-        TextView levelsLabel = (TextView) findViewById(R.id.level_label);
-
-        // setting up fonts
-        Typeface avenir_black = Typeface.createFromAsset(getAssets(), "fonts/avenir_black.ttf");
-        Typeface avenir_book = Typeface.createFromAsset(getAssets(), "fonts/avenir_book.ttf");
-        pointsTextView.setTypeface(avenir_black);
-        levelTextView.setTypeface(avenir_black);
-        pointsLabel.setTypeface(avenir_book);
-        levelsLabel.setTypeface(avenir_book);
-
         // setting up animations
         pointAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.points_animations);
         pointAnim.setTarget(pointsTextView);
-        levelAnim = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.level_animations);
-        levelAnim.setTarget(levelTextView);*/
     }
 
     @Override
@@ -135,8 +126,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
         // update view
         pointsTextView.setText(Integer.toString(points));
-        levelTextView.setText(Integer.toString(level));
-        timerProgress.setProgress(0);
+        timerProgress.setProgress(400);
     }
 
     protected void startGame() {
@@ -193,11 +183,8 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         TIMER_DELTA = -TIMER_BUMP * TIMER_DELTA; // give a timer bump
         pointsTextView.setText(Integer.toString(points));
         pointAnim.start();
-
-        if (points > level * LEVEL) {
+        if(points > 500){
             incrementLevel();
-            levelTextView.setText(Integer.toString(level));
-            levelAnim.start();
         }
     }
 
@@ -209,6 +196,5 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
     // ABSTRACT METHODS
     abstract protected void setColorsOnButtons();
-
     abstract protected void calculatePoints(View view);
 }
