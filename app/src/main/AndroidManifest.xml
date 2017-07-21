@@ -18,8 +18,13 @@
         <activity android:name="fr.justgame.quickcolor.game.StartGameActivity"></activity>
         <activity android:name="fr.justgame.quickcolor.game.TutorialActivity"></activity>
         <activity android:name="fr.justgame.quickcolor.game.ui.TimerActivity"></activity>
-        <activity android:name="fr.justgame.quickcolor.game.easy.EasyGameActivity"></activity>
+        <activity android:name=".game.rectangle.easy.EasyGameActivity"></activity>
         <activity android:name="fr.justgame.quickcolor.settings.SettingsActivity"></activity>
+        <activity
+            android:name=".application.CircularActivity"
+            android:theme="@style/Theme.Transparent"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

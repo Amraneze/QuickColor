@@ -18,7 +18,7 @@
     <color name="common_gray">#666666</color>
     <color name="common_gray_deep">#333333</color>
     <color name="common_gray_lite">#999999</color>
-    <color name="grey_text_color">#4d4d4d</color>
+    <color name="common_grey_text_color">#4d4d4d</color>
     <color name="grey_ad">#adadad</color>
     <color name="grey_ad_translucent">#AAadadad</color>
     <color name="grey_ee">#eeeeee</color>

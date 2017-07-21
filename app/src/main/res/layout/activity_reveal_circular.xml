@@ -1,0 +1,114 @@
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <FrameLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/grey_ad">
+
+        <ImageView
+            android:id="@+id/ic_settings"
+            android:layout_width="26.67dp"
+            android:layout_height="26.67dp"
+            android:layout_gravity="top|right"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/custom_ripple"
+            android:src="@drawable/ic_settings" />
+
+        <RelativeLayout android:id="@+id/ll_settings_layout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibtn_volume"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/volume" />
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibtn_share"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="50dp"
+                    android:background="@drawable/share" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_first"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|center_horizontal|center"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibtn_flag"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/flag" />
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibtn_like"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="50dp"
+                    android:background="@drawable/heart" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/ll_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_second"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical|center_horizontal|center"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibtn_certificate"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/certificate" />
+
+                <com.rey.material.widget.ImageButton
+                    android:id="@+id/ibtn_trophy"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="50dp"
+                    android:background="@drawable/trophy" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</android.support.v4.widget.DrawerLayout>

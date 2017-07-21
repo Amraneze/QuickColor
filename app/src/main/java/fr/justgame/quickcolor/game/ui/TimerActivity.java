@@ -5,14 +5,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.LinearLayout;
 
-import com.skyfishjy.library.RippleBackground;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.CommonActivity;
 import fr.justgame.quickcolor.common.ui.CommonTextView;
-import fr.justgame.quickcolor.game.easy.EasyGameActivity;
+import fr.justgame.quickcolor.game.rectangle.easy.EasyGameActivity;
 
 /**
  * Created by aaitzeouay on 17/07/2017.

@@ -15,7 +15,7 @@
         android:includeFontPadding="false"
         android:text="Click on the\n darkness color"
         android:textAlignment="center"
-        android:textColor="@color/grey_text_color"
+        android:textColor="@color/common_grey_text_color"
         android:textSize="30sp"
         app:font_style="filbert_brush"
         tools:layout_editor_absoluteY="0dp"

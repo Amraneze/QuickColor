@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <ProgressBar
@@ -18,51 +19,33 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-        <TextView
+        <fr.justgame.quickcolor.common.ui.CommonTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/points_label"
-            android:text="51515"
-            android:textColor="@color/ecg.fab"
+            android:id="@+id/tv_score_label"
+            android:text="Score :"
+            android:textColor="@color/common_grey_text_color"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/points_value"
-            android:textColor="@color/main_color_deep"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_toEndOf="@id/points_label"
-            android:layout_toRightOf="@id/points_label"
-            android:layout_centerVertical="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/level_value"
-            android:layout_marginStart="10dp"
-            android:textColor="@color/accentColor"
-            android:layout_marginLeft="10dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_centerVertical="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:textSize="26.67sp"
+            app:font_style="filbert_brush"/>
 
-        <TextView
+        <fr.justgame.quickcolor.common.ui.CommonTextView
+            android:id="@+id/tv_score_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/level_label"
-            android:text="level"
-            android:textColor="@color/accentColor"
-            android:layout_toStartOf="@id/level_value"
-            android:layout_toLeftOf="@id/level_value"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="false"
+            android:layout_centerVertical="true"
+            android:text="150"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_centerVertical="true" />
+            android:textColor="@color/common_grey_text_color"
+            android:textSize="40sp"
+            app:font_style="open_sans_bold" />
 
     </RelativeLayout>
 

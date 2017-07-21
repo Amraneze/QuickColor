@@ -8,12 +8,12 @@
 
     <ImageView
         android:id="@+id/ic_settings"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="26.67dp"
+        android:layout_height="26.67dp"
         android:layout_gravity="top|right"
         android:layout_marginTop="5dp"
-        android:src="@drawable/ic_settings"
-        android:background="@drawable/custom_ripple" />
+        android:background="@drawable/custom_ripple"
+        android:src="@drawable/ic_settings" />
 
     <LinearLayout
         android:id="@+id/ll_start_game"
@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/iv_logo"
-            android:layout_width="200dp"
-            android:layout_height="150dp"
+            android:layout_width="258dp"
+            android:layout_height="159dp"
             android:layout_gravity="center_vertical|center_horizontal|center"
             android:layout_marginTop="10dp"
             android:background="@drawable/logo" />
@@ -41,7 +41,7 @@
             android:gravity="center"
             android:text="Best Score"
             android:textColor="#FF4D4D4D"
-            android:textSize="46.67sp"
+            android:textSize="23.33sp"
             app:font_style="filbert_brush" />
 
         <LinearLayout
@@ -52,8 +52,8 @@
 
             <ImageView
                 android:id="@+id/iv_trophy"
-                android:layout_width="64dp"
-                android:layout_height="64dp"
+                android:layout_width="42.67dp"
+                android:layout_height="48dp"
                 android:layout_gravity="center_vertical|center_horizontal|center"
                 android:background="@drawable/ic_trophy" />
 
@@ -65,40 +65,52 @@
                 android:includeFontPadding="false"
                 android:text="26 111"
                 android:textColor="#FFFF5C5C"
-                android:textSize="61.25sp"
+                android:textSize="60sp"
                 app:font_style="open_sans_bold_italic" />
 
         </LinearLayout>
 
         <fr.justgame.quickcolor.common.ui.CommonButton
             android:id="@+id/btn_play"
-            android:layout_width="175dp"
-            android:layout_height="50dp"
+            android:layout_width="233.33dp"
+            android:layout_height="66.67dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="48dp"
             android:background="@drawable/rounded_button"
             android:text="Play now!"
             android:textColor="@color/white"
-            android:textSize="30sp"
+            android:textSize="40sp"
             app:font_style="filbert_brush" />
 
         <fr.justgame.quickcolor.common.ui.CommonButton
-            android:id="@+id/btn_fb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:id="@+id/btn_connect_fb"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical|center_horizontal|center"
+            android:layout_marginTop="21dp"
             android:background="@drawable/rounded_button"
-            android:text="Connect with" />
+            android:drawableEnd="@drawable/ic_qc_facebook_icon"
+            android:drawablePadding="-20dp"
+            android:duplicateParentState="true"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:paddingEnd="10dp"
+            android:text="Connect with"
+            android:textAlignment="center"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp"
+            app:font_style="open_sans_bold" />
 
         <fr.justgame.quickcolor.common.ui.CommonButton
-            android:id="@+id/btn_google"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btn_connect_google"
+            android:layout_width="180dp"
+            android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="21dp"
             android:background="@drawable/rounded_button"
-            android:text="connect" />
+            android:text="Connect with"
+            android:textColor="#FFFFFFFF"
+            android:textSize="16sp"
+            app:font_style="open_sans_bold"/>
 
     </LinearLayout>
 
@@ -133,5 +145,7 @@
 
         <include layout="@layout/settings_activity" />
 
+
+        </io.codetail.widget.RevealFrameLayout>
     </FrameLayout>
 </LinearLayout>
