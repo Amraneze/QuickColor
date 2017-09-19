@@ -1,6 +1,8 @@
 <LinearLayout android:id="@+id/lay_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
+    xmlns:strokeAttrs="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/start_game_background"
@@ -8,12 +10,12 @@
 
     <ImageView
         android:id="@+id/ic_settings"
-        android:layout_width="26.67dp"
-        android:layout_height="26.67dp"
         android:layout_gravity="top|right"
         android:layout_marginTop="5dp"
         android:background="@drawable/custom_ripple"
-        android:src="@drawable/ic_settings" />
+        android:src="@drawable/ic_settings"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
 
     <LinearLayout
         android:id="@+id/ll_start_game"
@@ -42,10 +44,11 @@
             android:text="Best Score"
             android:textColor="#FF4D4D4D"
             android:textSize="23.33sp"
-            app:font_style="filbert_brush" />
+            app:font_style="filbert_brush"
+            android:padding="10dp" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal">
@@ -54,42 +57,86 @@
                 android:id="@+id/iv_trophy"
                 android:layout_width="42.67dp"
                 android:layout_height="48dp"
-                android:layout_gravity="center_vertical|center_horizontal|center"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:background="@drawable/ic_trophy" />
 
-            <fr.justgame.quickcolor.common.ui.CommonTextView
-                android:id="@+id/tv_score"
+            <fr.justgame.quickcolor.common.ui.TextViewOutline
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal|center"
-                android:includeFontPadding="false"
                 android:text="26 111"
                 android:textColor="#FFFF5C5C"
                 android:textSize="60sp"
-                app:font_style="open_sans_bold_italic" />
+                app:outlineSize="10sp"
+                android:shadowColor="@android:color/darker_gray"
+                android:shadowRadius="1"
+                app:outlineColor="@android:color/white"
+                app:font_style="open_sans_bold_italic"
+                android:layout_gravity="center"
+                android:gravity="center" />
 
         </LinearLayout>
 
-        <fr.justgame.quickcolor.common.ui.CommonButton
+        <fr.justgame.quickcolor.common.ui.SpecialButton
             android:id="@+id/btn_play"
             android:layout_width="233.33dp"
             android:layout_height="66.67dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="48dp"
             android:background="@drawable/rounded_button"
+            android:layout_marginTop="48dp"
             android:text="Play now!"
             android:textColor="@color/white"
             android:textSize="40sp"
-            app:font_style="filbert_brush" />
+            fbutton:buttonColor="@color/common_red"
+            fbutton:shadowColor="@color/red"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="3dp"
+            fbutton:specialButtonText="filbert_brush"
+            fbutton:cornerRadius="50dp" />
 
-        <fr.justgame.quickcolor.common.ui.CommonButton
-            android:id="@+id/btn_connect_fb"
+        <FrameLayout
+            android:id="@+id/FrameLayout1"
+            android:layout_marginTop="21dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <fr.justgame.quickcolor.common.ui.SpecialButton
+                android:id="@+id/btn_connect_fb"
+                android:layout_width="180dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|center_horizontal|center"
+                android:drawableEnd="@drawable/ic_qc_facebook_icon"
+                android:drawablePadding="-20dp"
+                android:duplicateParentState="true"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:paddingEnd="10dp"
+                android:text="Connect with"
+                android:textAlignment="center"
+                android:textColor="#FFFFFFFF"
+                android:textSize="16sp"
+                app:font_style="open_sans_bold"
+                fbutton:buttonColor="@color/facebook_color"
+                fbutton:shadowColor="@color/primaryColor"
+                fbutton:shadowEnabled="true"
+                fbutton:shadowHeight="1dp"
+                fbutton:specialButtonText="filbert_brush"
+                fbutton:cornerRadius="50dp" />
+
+        </FrameLayout>
+
+        <fr.justgame.quickcolor.common.ui.SpecialButton
+            android:id="@+id/btn_connect_google"
             android:layout_width="180dp"
             android:layout_height="40dp"
             android:layout_gravity="center_vertical|center_horizontal|center"
             android:layout_marginTop="21dp"
-            android:background="@drawable/rounded_button"
-            android:drawableEnd="@drawable/ic_qc_facebook_icon"
+            android:drawableEnd="@drawable/ic_google_plus"
             android:drawablePadding="-20dp"
             android:duplicateParentState="true"
             android:gravity="center_vertical|center_horizontal|center"
@@ -98,19 +145,13 @@
             android:textAlignment="center"
             android:textColor="#FFFFFFFF"
             android:textSize="16sp"
-            app:font_style="open_sans_bold" />
-
-        <fr.justgame.quickcolor.common.ui.CommonButton
-            android:id="@+id/btn_connect_google"
-            android:layout_width="180dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="21dp"
-            android:background="@drawable/rounded_button"
-            android:text="Connect with"
-            android:textColor="#FFFFFFFF"
-            android:textSize="16sp"
-            app:font_style="open_sans_bold"/>
+            app:font_style="open_sans_bold"
+            fbutton:buttonColor="@color/common_red"
+            fbutton:shadowColor="@color/red"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="1dp"
+            fbutton:specialButtonText="filbert_brush"
+            fbutton:cornerRadius="50dp" />
 
     </LinearLayout>
 
@@ -134,18 +175,4 @@
 
         </com.google.android.gms.ads.AdView>
     </RelativeLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <io.codetail.widget.RevealFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <include layout="@layout/settings_activity" />
-
-
-        </io.codetail.widget.RevealFrameLayout>
-    </FrameLayout>
 </LinearLayout>

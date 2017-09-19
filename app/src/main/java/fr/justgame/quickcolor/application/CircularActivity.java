@@ -10,6 +10,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,6 +24,19 @@ public class CircularActivity extends AppCompatActivity {
 
     @BindView(R.id.root_layout)
     FrameLayout rootLayout;
+    @BindView(R.id.ic_settings)
+    ImageView ic_Settings;
+
+    @BindView(R.id.ibtn_volume)
+    ImageView ibtn_volume;
+    @BindView(R.id.ibtn_share)
+    ImageView ibtn_share;
+    @BindView(R.id.ibtn_flag)
+    ImageView ibtn_flag;
+    @BindView(R.id.ibtn_certificate)
+    ImageView ibtn_certificate;
+    @BindView(R.id.ibtn_trophy)
+    ImageView ibtn_trophy;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +48,7 @@ public class CircularActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reveal_circular);
         ButterKnife.bind(this);
 
+        setListeners();
         if (savedInstanceState == null) {
             rootLayout.setVisibility(View.INVISIBLE);
 
@@ -52,6 +67,15 @@ public class CircularActivity extends AppCompatActivity {
                 });
             }
         }
+    }
+
+    private void setListeners() {
+        ic_Settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void circularRevealActivity() {

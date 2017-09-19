@@ -3,6 +3,7 @@ package fr.justgame.quickcolor.game.rectangle.easy;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import butterknife.BindView;
@@ -31,7 +32,7 @@ public class EasyGameActivity extends MainGameActivity {
         setupProgressView();
 
         POINT_INCREMENT = 2;
-        TIMER_BUMP = 2;
+        TIMER_BUMP = 10;
 
         gameMode = GameMode.EASY;
         gameType = GameType.RECTANGLE;
@@ -75,9 +76,10 @@ public class EasyGameActivity extends MainGameActivity {
         View unclickedView = clickedView == btn_top ? btn_buttom : btn_top;
         ColorDrawable clickedColor = (ColorDrawable) clickedView.getBackground();
         ColorDrawable unClickedColor = (ColorDrawable) unclickedView.getBackground();
-
+        //Log.e("calculatePoints", clickedColor.getAlpha() + " " +unClickedColor.getAlpha());
         int alpha1 = Color.alpha(clickedColor.getColor());
         int alpha2 = Color.alpha(unClickedColor.getColor());
+        //Log.e("calculatePoints", "alpha1 " + alpha1 +" " +alpha2);
 
         // correct guess
         if (alpha1 < alpha2) {

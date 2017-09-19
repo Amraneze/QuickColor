@@ -1,4 +1,4 @@
-package fr.justgame.quickcolor.common.ui.textview;
+package fr.justgame.quickcolor.common.ui;
 
 import android.content.Context;
 

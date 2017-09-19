@@ -49,7 +49,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected int POINT_INCREMENT;
     protected int TIMER_BUMP;
     protected static int TIMER_DELTA = -1;
-    protected static final int START_TIMER = 200;
+    protected static final int START_TIMER = 800;
     protected static final int FPS = 100;
     protected static final int LEVEL = 25;
 
@@ -102,6 +102,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
+                            Log.e("Run", "timer "+timer + " TimerDelta "+TIMER_DELTA);
                             timerProgress.setProgress(timer);
                         }
                     });
@@ -126,7 +127,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
         // update view
         pointsTextView.setText(Integer.toString(points));
-        timerProgress.setProgress(400);
+        timerProgress.setProgress(800);
     }
 
     protected void startGame() {
@@ -183,6 +184,25 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         TIMER_DELTA = -TIMER_BUMP * TIMER_DELTA; // give a timer bump
         pointsTextView.setText(Integer.toString(points));
         pointAnim.start();
+        Log.e("updatePoints", "POints "+points + " TIMER_DELTA "+TIMER_DELTA);
+        if (points > 50) {
+            TIMER_BUMP = 9;
+        } else if (points > 100) {
+            TIMER_BUMP = 8;
+        } else if (points > 200) {
+            TIMER_BUMP = 7;
+        } else if (points > 300) {
+            TIMER_BUMP = 6;
+        } else if (points > 400) {
+            TIMER_BUMP = 5;
+        } else if (points > 500) {
+            TIMER_BUMP = 4;
+        } else if (points > 600) {
+            TIMER_BUMP = 3;
+        } else if (points > 700) {
+            TIMER_BUMP = 2;
+        }
+        incrementLevel();
         if(points > 500){
             incrementLevel();
         }
@@ -190,6 +210,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
     // called when user goes to next level
     public void incrementLevel() {
+        Log.e("incrementLevel", "level "+level +" timer "+TIMER_DELTA);
         level += 1;
         TIMER_DELTA = level;
     }

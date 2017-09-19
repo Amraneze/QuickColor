@@ -1,4 +1,4 @@
-package fr.justgame.quickcolor.common.ui.textview;
+package fr.justgame.quickcolor.common.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,12 +17,14 @@ import fr.justgame.quickcolor.R;
  */
 
 public class StrokedTextView extends TextView {
+
     private static final int DEFAULT_STROKE_WIDTH = 0;
 
     // fields
     private int _strokeColor;
     private float _strokeWidth;
     private boolean isDrawing;
+    private int style;
 
     public StrokedTextView(Context context) {
         this(context, null);

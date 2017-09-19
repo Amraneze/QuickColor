@@ -34,10 +34,58 @@
         </attr>
         <attr name="custom_text" format="string"/>
     </declare-styleable>
+
     <declare-styleable name="StrokedTextAttrs">
         <attr name="textStrokeColor" format="color"/>
         <attr name="textStrokeWidth" format="float"/>
         <attr name="textHintStrokeColor" format="color"/>
         <attr name="textHintStrokeWidth" format="float"/>
+    </declare-styleable>
+
+
+    <declare-styleable name="TextViewOutline">
+        <attr name="stroked_font_style">
+            <enum name="filbert_brush" value="1"/>
+            <enum name="filbert_brush_caps" value="2"/>
+            <enum name="open_sans_bold" value="3"/>
+            <enum name="open_sans_bold_italic" value="4"/>
+            <enum name="open_sans_extra_bold" value="5"/>
+            <enum name="open_sans_extra_bold_italic" value="6"/>
+            <enum name="open_sans_italic" value="7"/>
+            <enum name="open_sans_light" value="8"/>
+            <enum name="open_sans_light_italic" value="9"/>
+            <enum name="open_sans_regular" value="10"/>
+            <enum name="open_sans_semi_bold" value="11"/>
+            <enum name="open_sans_semi_bold_italic" value="12"/>
+        </attr>
+        <attr name="custom_color_stroked" format="color"/>
+        <attr name="outlineSize" format="dimension"/>
+        <attr name="outlineColor" format="color|reference"/>
+        <attr name="android:shadowRadius"/>
+        <attr name="android:shadowDx"/>
+        <attr name="android:shadowDy"/>
+        <attr name="android:shadowColor"/>
+    </declare-styleable>
+
+    <declare-styleable name="SpecialButton">
+        <attr name="specialButtonText">
+            <enum name="filbert_brush" value="1"/>
+            <enum name="filbert_brush_caps" value="2"/>
+            <enum name="open_sans_bold" value="3"/>
+            <enum name="open_sans_bold_italic" value="4"/>
+            <enum name="open_sans_extra_bold" value="5"/>
+            <enum name="open_sans_extra_bold_italic" value="6"/>
+            <enum name="open_sans_italic" value="7"/>
+            <enum name="open_sans_light" value="8"/>
+            <enum name="open_sans_light_italic" value="9"/>
+            <enum name="open_sans_regular" value="10"/>
+            <enum name="open_sans_semi_bold" value="11"/>
+            <enum name="open_sans_semi_bold_italic" value="12"/>
+        </attr>
+        <attr name="shadowEnabled" format="boolean" />
+        <attr name="buttonColor" format="color" />
+        <attr name="shadowColor" format="color" />
+        <attr name="shadowHeight" format="dimension" />
+        <attr name="cornerRadius" format="dimension" />
     </declare-styleable>
 </resources>

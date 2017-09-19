@@ -2,4 +2,5 @@
     <string name="app_name">QuickColor</string>
     <string name="banner_ad_unit_id">banner</string>
     <string name="preference_file_key">banner</string>
+    <string name="facebook_app_id">758654297675487</string>
 </resources>

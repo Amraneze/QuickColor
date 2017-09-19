@@ -22,7 +22,7 @@ public class FontManager {
         cache = new Typeface[FONT_ARRAY_SIZE];
     }
 
-    public Typeface getTypeFace(Context context, @Style int type){
+    public Typeface getTypeFace(Context context, int type){
         switch (type){
             case Style.FILBERT_BRUSH:
                 return getTypefaceAndCache(type,context,"fonts/FilbertBrushDemo.ttf");
