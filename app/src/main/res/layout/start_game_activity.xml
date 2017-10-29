@@ -35,22 +35,13 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/logo" />
 
-        <fr.justgame.quickcolor.common.ui.CommonTextView
-            android:id="@+id/tv_best_score"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="Best Score"
-            android:textColor="#FF4D4D4D"
-            android:textSize="23.33sp"
-            app:font_style="filbert_brush"
-            android:padding="10dp" />
-
         <LinearLayout
+            android:id="@+id/ll_high_score"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <ImageView
@@ -58,47 +49,58 @@
                 android:layout_width="42.67dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:gravity="center"
-                android:background="@drawable/ic_trophy" />
-
-            <fr.justgame.quickcolor.common.ui.TextViewOutline
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="26 111"
-                android:textColor="#FFFF5C5C"
-                android:textSize="60sp"
-                app:outlineSize="10sp"
-                android:shadowColor="@android:color/darker_gray"
-                android:shadowRadius="1"
-                app:outlineColor="@android:color/white"
-                app:font_style="open_sans_bold_italic"
-                android:layout_gravity="center"
+                android:background="@drawable/ic_trophy"
                 android:gravity="center" />
 
+            <fr.justgame.quickcolor.common.ui.CommonTextView
+                android:id="@+id/tv_best_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Best Score"
+                android:textColor="#FF4D4D4D"
+                android:textSize="23.33sp"
+                app:font_style="filbert_brush" />
+
         </LinearLayout>
+
+        <fr.justgame.quickcolor.common.ui.TextViewOutline
+            android:id="@+id/tv_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:shadowColor="@android:color/darker_gray"
+            android:shadowRadius="1"
+            android:text="26 111"
+            android:textColor="#FFFF5C5C"
+            android:textSize="60sp"
+            app:font_style="open_sans_bold_italic"
+            app:outlineColor="@android:color/white"
+            app:outlineSize="10sp" />
 
         <fr.justgame.quickcolor.common.ui.SpecialButton
             android:id="@+id/btn_play"
             android:layout_width="233.33dp"
             android:layout_height="66.67dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
             android:background="@drawable/rounded_button"
-            android:layout_marginTop="48dp"
             android:text="Play now!"
             android:textColor="@color/white"
             android:textSize="40sp"
             fbutton:buttonColor="@color/common_red"
+            fbutton:cornerRadius="50dp"
             fbutton:shadowColor="@color/red"
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="3dp"
-            fbutton:specialButtonText="filbert_brush"
-            fbutton:cornerRadius="50dp" />
+            fbutton:specialButtonText="filbert_brush" />
 
         <FrameLayout
             android:id="@+id/FrameLayout1"
-            android:layout_marginTop="21dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp">
 
             <com.facebook.login.widget.LoginButton
                 android:id="@+id/login_button"
@@ -111,22 +113,21 @@
                 android:layout_width="180dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center_vertical|center_horizontal|center"
-                android:drawableEnd="@drawable/ic_qc_facebook_icon"
-                android:drawablePadding="-20dp"
+                android:drawableStart="@drawable/ic_qc_facebook_icon"
                 android:duplicateParentState="true"
                 android:gravity="center_vertical|center_horizontal|center"
                 android:paddingEnd="10dp"
-                android:text="Connect with"
+                android:text="Login"
                 android:textAlignment="center"
                 android:textColor="#FFFFFFFF"
                 android:textSize="16sp"
                 app:font_style="open_sans_bold"
                 fbutton:buttonColor="@color/facebook_color"
+                fbutton:cornerRadius="50dp"
                 fbutton:shadowColor="@color/primaryColor"
                 fbutton:shadowEnabled="true"
                 fbutton:shadowHeight="1dp"
-                fbutton:specialButtonText="filbert_brush"
-                fbutton:cornerRadius="50dp" />
+                fbutton:specialButtonText="filbert_brush" />
 
         </FrameLayout>
 
@@ -134,24 +135,23 @@
             android:id="@+id/btn_connect_google"
             android:layout_width="180dp"
             android:layout_height="40dp"
-            android:layout_gravity="center_vertical|center_horizontal|center"
-            android:layout_marginTop="21dp"
-            android:drawableEnd="@drawable/ic_google_plus"
-            android:drawablePadding="-20dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:drawableStart="@drawable/ic_google_plus"
             android:duplicateParentState="true"
-            android:gravity="center_vertical|center_horizontal|center"
+            android:gravity="center"
             android:paddingEnd="10dp"
-            android:text="Connect with"
+            android:text="Login"
             android:textAlignment="center"
             android:textColor="#FFFFFFFF"
             android:textSize="16sp"
             app:font_style="open_sans_bold"
             fbutton:buttonColor="@color/common_red"
+            fbutton:cornerRadius="50dp"
             fbutton:shadowColor="@color/red"
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="1dp"
-            fbutton:specialButtonText="filbert_brush"
-            fbutton:cornerRadius="50dp" />
+            fbutton:specialButtonText="filbert_brush" />
 
     </LinearLayout>
 

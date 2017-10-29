@@ -3,4 +3,5 @@
     <string name="banner_ad_unit_id">banner</string>
     <string name="preference_file_key">banner</string>
     <string name="facebook_app_id">758654297675487</string>
+    <string name="fb_login_protocol_scheme">fb758654297675487</string>
 </resources>

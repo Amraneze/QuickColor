@@ -17,14 +17,14 @@
         android:layout_marginTop="50dp"
         android:orientation="horizontal">
 
-        <com.rey.material.widget.ImageButton
+        <ImageButton
             android:id="@+id/ibtn_volume"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/volume" />
 
-        <com.rey.material.widget.ImageButton
+        <ImageButton
             android:id="@+id/ibtn_share"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -44,14 +44,14 @@
         android:layout_marginTop="50dp"
         android:orientation="horizontal">
 
-        <com.rey.material.widget.ImageButton
+        <ImageButton
             android:id="@+id/ibtn_flag"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/flag" />
 
-        <com.rey.material.widget.ImageButton
+        <ImageButton
             android:id="@+id/ibtn_like"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -72,14 +72,14 @@
         android:layout_marginTop="50dp"
         android:orientation="horizontal">
 
-        <com.rey.material.widget.ImageButton
+        <ImageButton
             android:id="@+id/ibtn_certificate"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_marginEnd="50dp"
             android:background="@drawable/certificate" />
 
-        <com.rey.material.widget.ImageButton
+        <ImageButton
             android:id="@+id/ibtn_trophy"
             android:layout_width="100dp"
             android:layout_height="100dp"

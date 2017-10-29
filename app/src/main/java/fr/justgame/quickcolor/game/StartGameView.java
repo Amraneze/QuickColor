@@ -5,4 +5,5 @@ package fr.justgame.quickcolor.game;
  */
 
 public interface StartGameView {
+    void initHighScore(int highScore);
 }

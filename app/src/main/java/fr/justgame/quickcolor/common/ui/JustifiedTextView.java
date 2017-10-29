@@ -7,7 +7,9 @@ import android.util.AttributeSet;
  * Created by aaitzeouay on 09/07/2017.
  */
 
-public class JustifiedTextView extends com.uncopt.android.widget.text.justify.JustifiedTextView {
+public class JustifiedTextView {
+
+        /*extends com.uncopt.android.widget.text.justify.JustifiedTextView {
 
     public JustifiedTextView(Context context) {
         super(context);
@@ -27,5 +29,5 @@ public class JustifiedTextView extends com.uncopt.android.widget.text.justify.Ju
 
     private void init() {
         setTypeface(FontManager.INSTANCE.getTypeFace(getContext(), FontManager.Style.FILBERT_BRUSH));
-    }
+    }*/
 }

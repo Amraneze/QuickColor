@@ -1,18 +1,23 @@
 package fr.justgame.quickcolor.settings;
 
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 
-import com.rey.material.widget.ImageButton;
 
 import andy.ayaseruri.lib.CircularRevealActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.CommonActivity;
+import fr.justgame.quickcolor.common.utils.BoardScore;
 import fr.justgame.quickcolor.settings.model.SettingsModel;
 
 /**
@@ -51,12 +56,56 @@ public class SettingsActivity extends CircularRevealActivity implements Settings
     }
 
     private void setListeners() {
-
+        volumeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.setVolume();
+            }
+        });
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openPlayStore();
+            }
+        });
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = "Here is the share content body";
+                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+                sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+                startActivity(Intent.createChooser(sharingIntent, "Share via"));
+            }
+        });
+        trophyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BoardScore.getBoardScore(SettingsActivity.this);
+            }
+        });
     }
 
 
     @Override
     public void displaySettings(SettingsModel settings) {
 
+    }
+
+    private void openPlayStore() {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+        // To count with Play market backstack, After pressing back button,
+        // to taken back to our application, we need to add following flags to intent.
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(goToMarket);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
+        }
     }
 }
