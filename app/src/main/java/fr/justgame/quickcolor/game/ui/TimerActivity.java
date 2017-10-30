@@ -21,6 +21,7 @@ public class TimerActivity extends CommonActivity {
     private final static int FIRST_SCREEN = 1;
     private final static int SECOND_SCREEN = 2;
     private final static int THIRD_SCREEN = 3;
+    private final static int GO_SCREEN = 4;
 
     @BindView(R.id.ll_timer_layout)
     LinearLayout ll_timer_layout;
@@ -45,7 +46,7 @@ public class TimerActivity extends CommonActivity {
                     @Override
                     public void run() {
                         ll_timer_layout.setBackgroundColor(getResources().getColor(R.color.accentColor));
-                        tv_timer.setText("1");
+                        tv_timer.setText("3");
                     }
                 }, 1000);
                 break;
@@ -64,7 +65,18 @@ public class TimerActivity extends CommonActivity {
                     @Override
                     public void run() {
                         ll_timer_layout.setBackgroundColor(getResources().getColor(R.color.accentColor));
-                        tv_timer.setText("3");
+                        tv_timer.setText("1");
+                        startTimer(GO_SCREEN);
+                    }
+                }, 1000);
+                break;
+            case GO_SCREEN:
+                uiThread.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ll_timer_layout.setBackgroundColor(getResources().getColor(R.color.accentColorDisabled));
+                        tv_timer.setText("Go");
+                        tv_timer.setTextSize(250);
                         startActivity(EasyGameActivity.class);
                         finish();
                     }

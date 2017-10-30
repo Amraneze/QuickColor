@@ -9,9 +9,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="514dp"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <fr.justgame.quickcolor.common.ui.CommonButton

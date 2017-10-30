@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">QuickColor</string>
-    <string name="banner_ad_unit_id">banner</string>
-    <string name="preference_file_key">banner</string>
+    <string name="preference_file_key">QuickColorPref</string>
     <string name="facebook_app_id">758654297675487</string>
     <string name="fb_login_protocol_scheme">fb758654297675487</string>
 
@@ -29,4 +28,9 @@
     <string name="leaderboard_best_player" translatable="false">CgkI-8Dsnc8GEAIQCQ</string>
     <!-- leaderboard The noob -->
     <string name="leaderboard_the_noob" translatable="false">CgkI-8Dsnc8GEAIQCg</string>
+
+    <!-- AdMob ad unit IDs -->
+    <string name="banner_app_id">ca-app-pub-1156194574964834~4933083901</string>
+    <string name="banner_ad_unit_id">ca-app-pub-1156194574964834/1700415909</string>
+    <string name="interstitial_full_screen_ad_unit_id">ca-app-pub-1156194574964834/2383243500</string>
 </resources>

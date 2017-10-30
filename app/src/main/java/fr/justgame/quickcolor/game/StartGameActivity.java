@@ -15,6 +15,7 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -34,6 +35,8 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
@@ -44,6 +47,7 @@ import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.Authentication;
 import fr.justgame.quickcolor.common.CommonActivity;
 import fr.justgame.quickcolor.common.ui.CommonButton;
+import fr.justgame.quickcolor.common.ui.CommonTextView;
 import fr.justgame.quickcolor.common.ui.FontManager;
 import fr.justgame.quickcolor.common.ui.SpecialButton;
 import fr.justgame.quickcolor.common.ui.TextViewOutline;
@@ -51,6 +55,7 @@ import fr.justgame.quickcolor.common.utils.BoardScore;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
+import static fr.justgame.quickcolor.common.ui.FontManager.Style.FILBERT_BRUSH;
 import static fr.justgame.quickcolor.common.ui.FontManager.Style.O_BOLD;
 
 /**
@@ -70,11 +75,19 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     @BindView(R.id.btn_connect_google)
     SpecialButton btnConnectGoogle;
 
+    @BindView(R.id.ll_score)
+    LinearLayout llScore;
+    @BindView(R.id.ll_actual_score)
+    LinearLayout llActualScore;
+    @BindView(R.id.tv_actual_score_title)
+    CommonTextView tvActualScoreTitle;
+    @BindView(R.id.tv_actual_score)
+    TextViewOutline tvActualScore;
+
     @BindView(R.id.ll_high_score)
     LinearLayout llHighScore;
     @BindView(R.id.iv_trophy)
     ImageView ivTrophy;
-
     @BindView(R.id.tv_score)
     TextViewOutline tv_score;
 
@@ -84,12 +97,18 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     @BindView(R.id.sign_in_button)
     SignInButton btnLoginGoogle;
 
+    @BindView(R.id.adView)
+    AdView adView;
+
     /* Facebook */
     private CallbackManager callbackManager;
     private static Profile facebookProfile;
 
-    //@BindView(R.id.ll_settings_layout)
-    //RelativeLayout mRevealView;
+    /**
+     * AdMob
+     */
+    //final AdRequest adRequest = new AdRequest.Builder().build();
+    final AdRequest adRequest = new AdRequest.Builder().addTestDevice("A2CFB72AC87A2BD34522E0C3E91C5302").build();
 
     boolean hidden = true;
     protected boolean screenSeen;
@@ -108,27 +127,67 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
         setContentView(R.layout.start_game_activity);
         ButterKnife.bind(this);
+        adView.loadAd(adRequest);
+
         authentication = Authentication.INSTANCE;
         callbackManager = CallbackManager.Factory.create();
         facebookProfile = Profile.getCurrentProfile().getCurrentProfile();
         presenter = new StartGamePresenter(this);
+        getGameHelper().setMaxAutoSignInAttempts(0);
 
         setListeners();
         initUI();
         //setButtonsView();
         handleIntent(getIntent());
         init();
-        test();
-    }
-
-    private void test() {
-        BoardScore.publishScore(this, 1574);
     }
 
     private void initUI() {
-        if (facebookProfile != null) {
+        /*if (facebookProfile != null) {
             setButtonsView();
+        }*/
+        llActualScore.setVisibility(View.GONE);
+        setFacebookButton(facebookProfile != null);
+        setGoogleButton(presenter.isGoogleSignedIn());
+        //setGoogleButton(mHelper.isSignedIn());
+    }
+
+    private void setGoogleButton(boolean signedIn) {
+        btnConnectGoogle.setText(signedIn ? "Logout" : "Login");
+        btnConnectGoogle.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
+        btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_google_plus, 0);
+        btnConnectGoogle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    private void setFacebookButton(boolean isFacebookConnected) {
+        btn_connect_fb.setText(isFacebookConnected ? "Logout" : "Login");
+        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
+        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+    }
+
+    @Override
+    protected void onPause() {
+        if (adView != null) {
+            adView.pause();
         }
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onDestroy();
     }
 
     private void handleIntent(Intent intent) {
@@ -142,16 +201,27 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
             Log.e("HandleIntent", "null");
             return;
         }
+        setScore(String.valueOf(points));
         tv_score.setText(String.valueOf(points));
         Log.e("HandleIntent", gameMode + " best "+best);
-        initShareButtons(points);
-        presenter.publishScore(points);
+        /*presenter.publishScore(points);
         Games.Leaderboards.submitScore(getApiClient(),
                 getString(R.string.leaderboard_best_player),
-                points);
+                points);*/
     }
 
-    private void initShareButtons(int score) {
+    private void setScore(String score) {
+        tvActualScore.setText(score);
+        llActualScore.setVisibility(View.VISIBLE);
+        resizeBestScoreLayout();
+        initShareButtons(score);
+    }
+
+    private void resizeBestScoreLayout() {
+        tv_score.setTextSize(30);
+    }
+
+    private void initShareButtons(String score) {
         final ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
                 .setContentUrl(Uri.parse("http://visiofuture.me"))
                 .setQuote("Try to beat my score "+score+" on QuickColor.")
@@ -166,7 +236,7 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
             }
         });
         btn_connect_fb.setText("Share");
-        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, O_BOLD));
+        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
         btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
         btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
@@ -252,6 +322,7 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     protected void showTutorialIfFirstTime() {
         startActivity(new Intent(this, TutorialActivity.class));
+        finish();
         /*screenSeen = authentication.getSharedPreferences(this);
         if (!screenSeen) {
             authentication.setSharedPreferences(true, this);
@@ -265,10 +336,13 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     @Override
     public void initHighScore(int highScore) {
         if (highScore == 0) {
-            llHighScore.setVisibility(View.GONE);
-            tv_score.setVisibility(View.GONE);
+            llScore.setVisibility(View.INVISIBLE);
+            /*llHighScore.setVisibility(View.GONE);
+            tv_score.setVisibility(View.GONE);*/
         } else {
-            tv_score.setVisibility(View.VISIBLE);
+            llScore.setVisibility(View.VISIBLE);
+            //tv_score.setVisibility(View.VISIBLE);
+            tv_score.setTextSize(60);
             tv_score.setText(String.valueOf(highScore));
         }
     }
@@ -276,7 +350,8 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.sign_in_button) {
-            if (presenter.isGoogleSignedIn()) {
+            Log.e("onCLick", " From here "+presenter.isGoogleSignedIn());
+            if (!presenter.isGoogleSignedIn()) {
                 beginUserInitiatedSignIn();
             } else {
                 signOut();

@@ -77,6 +77,22 @@ public class TextViewOutline extends TextView {
         Log.d("TextView", "mOutlineColor = " + mOutlineColor);
     }
 
+    private void setPaintToOutlineOrigin(){
+        Paint paint = getPaint();
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(mOutlineSize);
+        super.setTextColor(mOutlineColor);
+        super.setShadowLayer(mShadowRadius, mShadowDx, mShadowDy,  mShadowColor);
+    }
+
+    private void setPaintToRegularOrigin() {
+        Paint paint = getPaint();
+        paint.setStyle(Paint.Style.FILL);
+        paint.setStrokeWidth(0);
+        super.setTextColor(mTextColor);
+        super.setShadowLayer(0, 0, 0, Color.TRANSPARENT);
+    }
+
     private void setPaintToOutline(){
 
         Paint paint = getPaint();
