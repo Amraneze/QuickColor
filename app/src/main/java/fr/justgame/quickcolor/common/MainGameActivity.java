@@ -215,6 +215,13 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         TIMER_DELTA = level;
     }
 
+    //TODO add this
+    /*
+        if(getApiClient().isConnected())
+               Games.Achievements.unlock(getApiClient(),
+               getString(R.string.correct_guess_achievement));
+      */
+
     // ABSTRACT METHODS
     abstract protected void setColorsOnButtons();
     abstract protected void calculatePoints(View view);

@@ -4,4 +4,29 @@
     <string name="preference_file_key">banner</string>
     <string name="facebook_app_id">758654297675487</string>
     <string name="fb_login_protocol_scheme">fb758654297675487</string>
+
+    <!-- app_id -->
+    <string name="app_id" translatable="false">227427426427</string>
+    <!-- achievement High Five -->
+    <string name="achievement_high_five" translatable="false">CgkI-8Dsnc8GEAIQAA</string>
+    <!-- achievement First Place -->
+    <string name="achievement_first_place" translatable="false">CgkI-8Dsnc8GEAIQAQ</string>
+    <!-- achievement Second Place -->
+    <string name="achievement_second_place" translatable="false">CgkI-8Dsnc8GEAIQAg</string>
+    <!-- achievement Third Place -->
+    <string name="achievement_third_place" translatable="false">CgkI-8Dsnc8GEAIQAw</string>
+    <!-- achievement Noob -->
+    <string name="achievement_noob" translatable="false">CgkI-8Dsnc8GEAIQBA</string>
+    <!-- achievement The Master -->
+    <string name="achievement_the_master" translatable="false">CgkI-8Dsnc8GEAIQBQ</string>
+    <!-- achievement The big boss -->
+    <string name="achievement_the_big_boss" translatable="false">CgkI-8Dsnc8GEAIQBg</string>
+    <!-- achievement Mr Worldwide -->
+    <string name="achievement_mr_worldwide" translatable="false">CgkI-8Dsnc8GEAIQBw</string>
+    <!-- achievement Captain -->
+    <string name="achievement_captain" translatable="false">CgkI-8Dsnc8GEAIQCA</string>
+    <!-- leaderboard Best Player -->
+    <string name="leaderboard_best_player" translatable="false">CgkI-8Dsnc8GEAIQCQ</string>
+    <!-- leaderboard The noob -->
+    <string name="leaderboard_the_noob" translatable="false">CgkI-8Dsnc8GEAIQCg</string>
 </resources>

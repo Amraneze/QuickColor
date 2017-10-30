@@ -15,6 +15,8 @@ import android.text.Spanned;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,11 +34,13 @@ import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.ShareHashtag;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.games.Games;
+import com.google.example.games.basegameutils.BaseGameActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
-import fr.justgame.quickcolor.application.CircularActivity;
 import fr.justgame.quickcolor.common.Authentication;
 import fr.justgame.quickcolor.common.CommonActivity;
 import fr.justgame.quickcolor.common.ui.CommonButton;
@@ -44,7 +48,6 @@ import fr.justgame.quickcolor.common.ui.FontManager;
 import fr.justgame.quickcolor.common.ui.SpecialButton;
 import fr.justgame.quickcolor.common.ui.TextViewOutline;
 import fr.justgame.quickcolor.common.utils.BoardScore;
-import fr.justgame.quickcolor.settings.SettingsActivity;
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 
@@ -54,29 +57,32 @@ import static fr.justgame.quickcolor.common.ui.FontManager.Style.O_BOLD;
  * Created by aaitzeouay on 09/07/2017.
  */
 
-public class StartGameActivity extends CommonActivity implements StartGameView {
+public class StartGameActivity extends BaseGameActivity implements View.OnClickListener, StartGameView {
 
     private static final float UNIT_TEXT_RATIO = 0.8f;
 
     @BindView(R.id.lay_container)
     LinearLayout lay_container;
-    @BindView(R.id.ic_settings)
-    ImageView btn_settings;
     @BindView(R.id.btn_play)
     SpecialButton btn_play;
     @BindView(R.id.btn_connect_fb)
     SpecialButton btn_connect_fb;
     @BindView(R.id.btn_connect_google)
-    SpecialButton btn_connect_google;
+    SpecialButton btnConnectGoogle;
 
     @BindView(R.id.ll_high_score)
     LinearLayout llHighScore;
+    @BindView(R.id.iv_trophy)
+    ImageView ivTrophy;
 
     @BindView(R.id.tv_score)
     TextViewOutline tv_score;
 
     @BindView(R.id.login_button)
     LoginButton btnLoginFacebook;
+
+    @BindView(R.id.sign_in_button)
+    SignInButton btnLoginGoogle;
 
     /* Facebook */
     private CallbackManager callbackManager;
@@ -92,6 +98,10 @@ public class StartGameActivity extends CommonActivity implements StartGameView {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
@@ -136,6 +146,9 @@ public class StartGameActivity extends CommonActivity implements StartGameView {
         Log.e("HandleIntent", gameMode + " best "+best);
         initShareButtons(points);
         presenter.publishScore(points);
+        Games.Leaderboards.submitScore(getApiClient(),
+                getString(R.string.leaderboard_best_player),
+                points);
     }
 
     private void initShareButtons(int score) {
@@ -163,7 +176,7 @@ public class StartGameActivity extends CommonActivity implements StartGameView {
         btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, O_BOLD));
         btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
         btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        btn_connect_google.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
     }
 
     private Spannable getStringText() {
@@ -179,16 +192,26 @@ public class StartGameActivity extends CommonActivity implements StartGameView {
     }
 
     private void setListeners() {
+        ivTrophy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO start achievement in presneter
+                //startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), 1);
+                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
+                        getApiClient(), getString(R.string.leaderboard_best_player)),
+                        2);
+            }
+        });
+        btnConnectGoogle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btnLoginGoogle.performClick();
+            }
+        });
         btn_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showTutorialIfFirstTime();
-            }
-        });
-        btn_settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(CircularActivity.class);
             }
         });
         btn_connect_fb.setOnClickListener(new View.OnClickListener() {
@@ -228,7 +251,7 @@ public class StartGameActivity extends CommonActivity implements StartGameView {
     }*/
 
     protected void showTutorialIfFirstTime() {
-        startActivity(TutorialActivity.class);
+        startActivity(new Intent(this, TutorialActivity.class));
         /*screenSeen = authentication.getSharedPreferences(this);
         if (!screenSeen) {
             authentication.setSharedPreferences(true, this);
@@ -248,5 +271,29 @@ public class StartGameActivity extends CommonActivity implements StartGameView {
             tv_score.setVisibility(View.VISIBLE);
             tv_score.setText(String.valueOf(highScore));
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.sign_in_button) {
+            if (presenter.isGoogleSignedIn()) {
+                beginUserInitiatedSignIn();
+            } else {
+                signOut();
+                onSignInFailed();
+            }
+        }
+    }
+
+    @Override
+    public void onSignInFailed() {
+        btnConnectGoogle.setText("Login");
+        presenter.saveGoogleSignIn(false);
+    }
+
+    @Override
+    public void onSignInSucceeded() {
+        btnConnectGoogle.setText("Logout");
+        presenter.saveGoogleSignIn(true);
     }
 }
