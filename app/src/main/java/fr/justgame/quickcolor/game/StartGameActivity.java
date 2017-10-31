@@ -1,27 +1,15 @@
 package fr.justgame.quickcolor.game;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -45,26 +33,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.Authentication;
-import fr.justgame.quickcolor.common.CommonActivity;
-import fr.justgame.quickcolor.common.ui.CommonButton;
 import fr.justgame.quickcolor.common.ui.CommonTextView;
 import fr.justgame.quickcolor.common.ui.FontManager;
 import fr.justgame.quickcolor.common.ui.SpecialButton;
 import fr.justgame.quickcolor.common.ui.TextViewOutline;
-import fr.justgame.quickcolor.common.utils.BoardScore;
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
+import fr.justgame.quickcolor.game.ui.TimerActivity;
 
 import static fr.justgame.quickcolor.common.ui.FontManager.Style.FILBERT_BRUSH;
-import static fr.justgame.quickcolor.common.ui.FontManager.Style.O_BOLD;
 
 /**
  * Created by aaitzeouay on 09/07/2017.
  */
 
 public class StartGameActivity extends BaseGameActivity implements View.OnClickListener, StartGameView {
-
-    private static final float UNIT_TEXT_RATIO = 0.8f;
 
     @BindView(R.id.lay_container)
     LinearLayout lay_container;
@@ -119,7 +100,9 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+        }
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -137,32 +120,26 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
         setListeners();
         initUI();
-        //setButtonsView();
         handleIntent(getIntent());
-        init();
     }
 
     private void initUI() {
-        /*if (facebookProfile != null) {
-            setButtonsView();
-        }*/
         llActualScore.setVisibility(View.GONE);
         setFacebookButton(facebookProfile != null);
         setGoogleButton(presenter.isGoogleSignedIn());
-        //setGoogleButton(mHelper.isSignedIn());
     }
 
     private void setGoogleButton(boolean signedIn) {
-        btnConnectGoogle.setText(signedIn ? "Logout" : "Login");
+        btnConnectGoogle.setText(signedIn ? R.string.general_logout : R.string.general_login);
         btnConnectGoogle.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
-        btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_google_plus, 0);
+        btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_ic_google_plus, 0, 0, 0);
         btnConnectGoogle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 
     private void setFacebookButton(boolean isFacebookConnected) {
-        btn_connect_fb.setText(isFacebookConnected ? "Logout" : "Login");
+        btn_connect_fb.setText(isFacebookConnected ? R.string.general_logout : R.string.general_login);
         btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
-        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_qc_facebook_icon, 0, 0, 0);
         btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 
@@ -192,13 +169,9 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     private void handleIntent(Intent intent) {
         String gameMode = intent.getStringExtra("gameMode");
-        String gameType = intent.getStringExtra("gameType");
-        boolean newScore = intent.getBooleanExtra("newScore", false);
         int best = intent.getIntExtra("best", 0);
-        int level = intent.getIntExtra("level", 0);
         int points = intent.getIntExtra("points", 0);
         if (gameMode == null) {
-            Log.e("HandleIntent", "null");
             return;
         }
         setScore(String.valueOf(points));
@@ -223,7 +196,7 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     private void initShareButtons(String score) {
         final ShareLinkContent shareLinkContent = new ShareLinkContent.Builder()
-                .setContentUrl(Uri.parse("http://visiofuture.me"))
+                .setContentUrl(Uri.parse("http://amraneze.github.io"))
                 .setQuote("Try to beat my score "+score+" on QuickColor.")
                 .setShareHashtag(new ShareHashtag.Builder()
                         .setHashtag("#QuickColor")
@@ -235,30 +208,10 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
                 ShareDialog.show(StartGameActivity.this, shareLinkContent);
             }
         });
-        btn_connect_fb.setText("Share");
+        btn_connect_fb.setText(R.string.general_share);
         btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
-        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_qc_facebook_icon, 0, 0, 0);
         btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-    }
-
-    private void setButtonsView() {
-        btn_connect_fb.setText("Logout");
-        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, O_BOLD));
-        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
-        btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
-    }
-
-    private Spannable getStringText() {
-        String text = "Connect with";
-        Spannable spannable = new SpannableString(text);
-        spannable.setSpan(new RelativeSizeSpan(UNIT_TEXT_RATIO),
-                text.length(), text.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-        return spannable;
-    }
-
-    private void init() {
-        //mRevealView.setVisibility(View.GONE);
     }
 
     private void setListeners() {
@@ -315,21 +268,16 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    /*@OnClick(R.id.btn_play)
-    public void onPlayButtonClicked(){
-        showTutorialIfFirstTime();
-    }*/
-
     protected void showTutorialIfFirstTime() {
-        startActivity(new Intent(this, TutorialActivity.class));
-        finish();
-        /*screenSeen = authentication.getSharedPreferences(this);
+        screenSeen = authentication.getSharedPreferences(this);
         if (!screenSeen) {
             authentication.setSharedPreferences(true, this);
-            startActivity(TutorialActivity.class);
+            startActivity(new Intent(this, TutorialActivity.class));
+            finish();
         } else {
-            startActivity(TimerActivity.class);
-        }*/
+            startActivity(new Intent(this, TimerActivity.class));
+            finish();
+        }
     }
 
 
@@ -362,13 +310,13 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     @Override
     public void onSignInFailed() {
-        btnConnectGoogle.setText("Login");
+        btnConnectGoogle.setText(R.string.general_login);
         presenter.saveGoogleSignIn(false);
     }
 
     @Override
     public void onSignInSucceeded() {
-        btnConnectGoogle.setText("Logout");
+        btnConnectGoogle.setText(R.string.general_logout);
         presenter.saveGoogleSignIn(true);
     }
 }

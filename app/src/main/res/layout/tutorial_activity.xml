@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal|center"
         android:includeFontPadding="false"
-        android:text="Click on the\n darkness color"
+        android:text="@string/tutorial_information"
         android:textAlignment="center"
         android:textColor="@color/common_grey_text_color"
         android:textSize="30sp"
@@ -33,7 +33,6 @@
         app:layout_constraintBottom_toTopOf="@+id/btn_play"
         android:layout_marginTop="40dp"
         app:layout_constraintTop_toBottomOf="@+id/tv_score"
-        android:layout_marginLeft="0dp"
         app:layout_constraintVertical_bias="0.478"
         app:layout_constraintLeft_toLeftOf="parent">
 
@@ -87,7 +86,7 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/rounded_button"
-        android:text="Ok"
+        android:text="@string/general_ok"
         android:textColor="@color/white"
         android:textSize="30sp"
         fbutton:buttonColor="@color/common_red"

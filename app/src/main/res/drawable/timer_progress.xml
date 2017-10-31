@@ -8,6 +8,10 @@
         <clip>
             <shape android:shape="rectangle">
                 <solid android:color="#b8ee82" />
+                <!--gradient
+                    android:startColor="#c0392b"
+                    android:centerColor="#e67e22"
+                    android:endColor="#b8ee82" /-->
             </shape>
         </clip>
     </item>

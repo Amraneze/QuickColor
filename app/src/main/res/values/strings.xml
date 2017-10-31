@@ -33,4 +33,16 @@
     <string name="banner_app_id">ca-app-pub-1156194574964834~4933083901</string>
     <string name="banner_ad_unit_id">ca-app-pub-1156194574964834/1700415909</string>
     <string name="interstitial_full_screen_ad_unit_id">ca-app-pub-1156194574964834/2383243500</string>
+
+    <string name="tutorial_information">Click on the\n darkness color</string>
+    <string name="general_ok">OK</string>
+    <string name="general_login">Login</string>
+    <string name="general_logout">Logout</string>
+    <string name="general_share">Share</string>
+    <string name="general_your_score">Your Score</string>
+    <string name="general_best_score">Best Score</string>
+    <string name="general_play_now">Play now!</string>
+    <string name="general_26111">26 111</string>
+    <string name="general_trophy">LeaderBoard</string>
+
 </resources>

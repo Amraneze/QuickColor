@@ -11,16 +11,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
-        <activity android:name=".intro.SplashScreen" android:launchMode="singleTask">
+        <activity android:name=".intro.SplashScreen" android:launchMode="singleTask" android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".game.StartGameActivity" android:launchMode="singleTask"/>
-        <activity android:name=".game.TutorialActivity" android:launchMode="singleTask"/>
-        <activity android:name=".game.ui.TimerActivity" android:launchMode="singleTask"/>
-        <activity android:name=".game.rectangle.easy.EasyGameActivity" android:launchMode="singleTask"/>
+        <activity android:name=".game.StartGameActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
+        <activity android:name=".game.TutorialActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
+        <activity android:name=".game.ui.TimerActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
+        <activity android:name=".game.rectangle.easy.EasyGameActivity" android:launchMode="singleTask" android:screenOrientation="portrait" />
 
         <provider android:authorities="com.facebook.app.FacebookContentProvider758654297675487"
             android:name="com.facebook.FacebookContentProvider"

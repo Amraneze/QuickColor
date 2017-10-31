@@ -7,6 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -49,7 +54,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected int POINT_INCREMENT;
     protected int TIMER_BUMP;
     protected static int TIMER_DELTA = -1;
-    protected static final int START_TIMER = 800;
+    protected static final int START_TIMER = 500;
     protected static final int FPS = 100;
     protected static final int LEVEL = 25;
 
@@ -104,6 +109,16 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
                         public void run() {
                             Log.e("Run", "timer "+timer + " TimerDelta "+TIMER_DELTA);
                             timerProgress.setProgress(timer);
+                            if (timer < 500 && timer > 450) {
+                                //timerProgress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.fbutton_color_carrot), PorterDuff.Mode.ADD);
+                                timerProgress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.fbutton_color_carrot), PorterDuff.Mode.ADD);
+                                timerProgress.setBackgroundColor(getResources().getColor(R.color.white));
+                            } else if (timer < 450 && timer > 400) {
+                                timerProgress.getProgressDrawable().setColorFilter(getResources().getColor(R.color.fbutton_color_pomegranate), PorterDuff.Mode.SCREEN);
+                                timerProgress.setBackgroundColor(getResources().getColor(R.color.white));
+                                //Make two progress and hide each one
+                            }
+
                         }
                     });
                 }
@@ -127,7 +142,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
 
         // update view
         pointsTextView.setText(Integer.toString(points));
-        timerProgress.setProgress(800);
+        timerProgress.setProgress(500);
     }
 
     protected void startGame() {

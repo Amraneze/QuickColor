@@ -82,7 +82,7 @@ public class EasyGameActivity extends MainGameActivity {
         //Log.e("calculatePoints", "alpha1 " + alpha1 +" " +alpha2);
 
         // correct guess
-        if (alpha1 < alpha2) {
+        if (alpha1 > alpha2) {
             updatePoints();
         } else { // incorrect guess
             endGame();

@@ -10,6 +10,7 @@ import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.CommonActivity;
 import fr.justgame.quickcolor.common.ui.CommonButton;
+import fr.justgame.quickcolor.common.ui.SpecialButton;
 import fr.justgame.quickcolor.game.ui.TimerActivity;
 
 /**
@@ -22,6 +23,8 @@ public class TutorialActivity extends CommonActivity {
     RippleBackground rb_finger;
     @BindView(R.id.btn_light_color)
     CommonButton btn_light_color;
+    @BindView(R.id.btn_ok)
+    SpecialButton btn_ok;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +39,19 @@ public class TutorialActivity extends CommonActivity {
         btn_light_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(TimerActivity.class);
-                finish();
+                startTimerActivity();
             }
         });
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTimerActivity();
+            }
+        });
+    }
+
+    private void startTimerActivity() {
+        startActivity(TimerActivity.class);
+        finish();
     }
 }
