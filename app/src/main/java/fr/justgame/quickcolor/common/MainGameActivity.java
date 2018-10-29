@@ -7,8 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -54,6 +58,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
     protected static final int LEVEL = 25;
 
     protected Handler handler;
+    protected Handler uiHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
         getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         handler = new Handler();
+        uiHandler = new Handler(getMainLooper());
     }
 
     protected void setupProgressView() {
@@ -102,7 +108,18 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.e("Run", "timer "+timer + " TimerDelta "+TIMER_DELTA);
+                            //Log.e("Run", "timer "+timer + " TimerDelta "+TIMER_DELTA);
+                            LayerDrawable progressBarDrawable = (LayerDrawable) timerProgress.getProgressDrawable();
+                            if (timer > 400) {
+                                Drawable progressDrawable = progressBarDrawable.getDrawable(1);
+                                progressDrawable.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.common_green), PorterDuff.Mode.SRC_IN);
+                            } else if (timer < 200) {
+                                Drawable progressDrawable = progressBarDrawable.getDrawable(1);
+                                progressDrawable.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.splash_screen_red), PorterDuff.Mode.SRC_IN);
+                            } else {
+                                Drawable progressDrawable = progressBarDrawable.getDrawable(1);
+                                progressDrawable.setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.common_orange), PorterDuff.Mode.SRC_IN);
+                            }
                             timerProgress.setProgress(timer);
                         }
                     });
@@ -111,7 +128,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            endGame();
+                            onTimeIsUp();
                         }
                     });
                 }
@@ -223,6 +240,7 @@ public abstract class MainGameActivity extends Activity implements View.OnClickL
       */
 
     // ABSTRACT METHODS
-    abstract protected void setColorsOnButtons();
-    abstract protected void calculatePoints(View view);
+    protected abstract void setColorsOnButtons();
+    protected abstract void calculatePoints(View view);
+    protected abstract void onTimeIsUp();
 }

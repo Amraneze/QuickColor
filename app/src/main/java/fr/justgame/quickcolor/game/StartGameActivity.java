@@ -1,27 +1,25 @@
 package fr.justgame.quickcolor.game;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
 import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -38,22 +36,20 @@ import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.games.Games;
 import com.google.example.games.basegameutils.BaseGameActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.Authentication;
-import fr.justgame.quickcolor.common.CommonActivity;
 import fr.justgame.quickcolor.common.ui.CommonButton;
 import fr.justgame.quickcolor.common.ui.CommonTextView;
+import fr.justgame.quickcolor.common.ui.CustomSnackBar;
 import fr.justgame.quickcolor.common.ui.FontManager;
-import fr.justgame.quickcolor.common.ui.SpecialButton;
 import fr.justgame.quickcolor.common.ui.TextViewOutline;
-import fr.justgame.quickcolor.common.utils.BoardScore;
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
+import fr.justgame.quickcolor.common.ui.dialog.BaseDialog;
+import fr.justgame.quickcolor.common.utils.NetworkUtils;
+import fr.justgame.quickcolor.game.ui.TimerActivity;
 
 import static fr.justgame.quickcolor.common.ui.FontManager.Style.FILBERT_BRUSH;
 import static fr.justgame.quickcolor.common.ui.FontManager.Style.O_BOLD;
@@ -68,12 +64,14 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     @BindView(R.id.lay_container)
     LinearLayout lay_container;
+    @BindView(R.id.iv_logo)
+    ImageView ivLogo;
     @BindView(R.id.btn_play)
-    SpecialButton btn_play;
+    CommonButton btn_play;
     @BindView(R.id.btn_connect_fb)
-    SpecialButton btn_connect_fb;
+    CommonButton btnConnectFb;
     @BindView(R.id.btn_connect_google)
-    SpecialButton btnConnectGoogle;
+    CommonButton btnConnectGoogle;
 
     @BindView(R.id.ll_score)
     LinearLayout llScore;
@@ -86,10 +84,8 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     @BindView(R.id.ll_high_score)
     LinearLayout llHighScore;
-    @BindView(R.id.iv_trophy)
-    ImageView ivTrophy;
     @BindView(R.id.tv_score)
-    TextViewOutline tv_score;
+    CommonTextView tv_score;
 
     @BindView(R.id.login_button)
     LoginButton btnLoginFacebook;
@@ -108,7 +104,7 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
      * AdMob
      */
     //final AdRequest adRequest = new AdRequest.Builder().build();
-    final AdRequest adRequest = new AdRequest.Builder().addTestDevice("A2CFB72AC87A2BD34522E0C3E91C5302").build();
+    final AdRequest adRequest = new AdRequest.Builder().addTestDevice("BFA33742EFB0960026849EAE30F9BC31").build();
 
     boolean hidden = true;
     protected boolean screenSeen;
@@ -127,11 +123,12 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
         setContentView(R.layout.start_game_activity);
         ButterKnife.bind(this);
+        initAnimations();
         adView.loadAd(adRequest);
 
         authentication = Authentication.INSTANCE;
         callbackManager = CallbackManager.Factory.create();
-        facebookProfile = Profile.getCurrentProfile().getCurrentProfile();
+        facebookProfile = Profile.getCurrentProfile();
         presenter = new StartGamePresenter(this);
         getGameHelper().setMaxAutoSignInAttempts(0);
 
@@ -140,6 +137,14 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
         //setButtonsView();
         handleIntent(getIntent());
         init();
+    }
+
+    private void initAnimations() {
+        ivLogo.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        llScore.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        btn_play.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        btnConnectFb.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+        btnConnectGoogle.startAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
     }
 
     private void initUI() {
@@ -153,17 +158,17 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     }
 
     private void setGoogleButton(boolean signedIn) {
-        btnConnectGoogle.setText(signedIn ? "Logout" : "Login");
-        btnConnectGoogle.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
+        btnConnectGoogle.setText(signedIn ? "Logout" : "Connect with");
+        btnConnectGoogle.setTypeface(FontManager.INSTANCE.getTypeFace(this, FontManager.Style.O_BOLD));
         btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_google_plus, 0);
         btnConnectGoogle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 
     private void setFacebookButton(boolean isFacebookConnected) {
-        btn_connect_fb.setText(isFacebookConnected ? "Logout" : "Login");
-        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
-        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
-        btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btnConnectFb.setText(isFacebookConnected ? "Logout" : "Connect with");
+        btnConnectFb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FontManager.Style.O_BOLD));
+        btnConnectFb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btnConnectFb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 
     @Override
@@ -177,8 +182,27 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     @Override
     protected void onResume() {
         super.onResume();
+        hideSystemUI();
         if (adView != null) {
             adView.resume();
+        }
+    }
+
+    private void hideSystemUI() {
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            hideSystemUI();
         }
     }
 
@@ -188,6 +212,18 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
             adView.pause();
         }
         super.onDestroy();
+    }
+
+    private void displayNetworkDialog() {
+        BaseDialog dialog = BaseDialog.newInstance(getString(R.string.network_unavailable_dialog_title),
+                getString(R.string.network_unavailable_dialog_message))
+                .setDialogListener(new BaseDialog.DialogListener() {
+                    @Override
+                    public void onButtonClicked(int which) {
+                        if (which == BaseDialog.BUTTON_INDEX_1) {}
+                    }
+                });
+        dialog.show(getSupportFragmentManager(), "network_unavailable");
     }
 
     private void handleIntent(Intent intent) {
@@ -213,12 +249,8 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     private void setScore(String score) {
         tvActualScore.setText(score);
         llActualScore.setVisibility(View.VISIBLE);
-        resizeBestScoreLayout();
+        //resizeBestScoreLayout();
         initShareButtons(score);
-    }
-
-    private void resizeBestScoreLayout() {
-        tv_score.setTextSize(30);
     }
 
     private void initShareButtons(String score) {
@@ -229,23 +261,23 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
                         .setHashtag("#QuickColor")
                         .build())
                 .build();
-        btn_connect_fb.setOnClickListener(new View.OnClickListener() {
+        btnConnectFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ShareDialog.show(StartGameActivity.this, shareLinkContent);
             }
         });
-        btn_connect_fb.setText("Share");
-        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
-        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
-        btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btnConnectFb.setText("Share");
+        btnConnectFb.setTypeface(FontManager.INSTANCE.getTypeFace(this, FILBERT_BRUSH));
+        btnConnectFb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btnConnectFb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
     }
 
     private void setButtonsView() {
-        btn_connect_fb.setText("Logout");
-        btn_connect_fb.setTypeface(FontManager.INSTANCE.getTypeFace(this, O_BOLD));
-        btn_connect_fb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
-        btn_connect_fb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        btnConnectFb.setText("Logout");
+        btnConnectFb.setTypeface(FontManager.INSTANCE.getTypeFace(this, O_BOLD));
+        btnConnectFb.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
+        btnConnectFb.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         btnConnectGoogle.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_qc_facebook_icon, 0);
     }
 
@@ -262,20 +294,24 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
     }
 
     private void setListeners() {
-        ivTrophy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO start achievement in presneter
-                //startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), 1);
-                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
-                        getApiClient(), getString(R.string.leaderboard_best_player)),
-                        2);
-            }
-        });
+//        ivTrophy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //TODO start achievement in presneter
+//                //startActivityForResult(Games.Achievements.getAchievementsIntent(getApiClient()), 1);
+//                startActivityForResult(Games.Leaderboards.getLeaderboardIntent(
+//                        getApiClient(), getString(R.string.leaderboard_best_player)),
+//                        2);
+//            }
+//        });
         btnConnectGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnLoginGoogle.performClick();
+                if (!NetworkUtils.isNetworkAvailable(StartGameActivity.this)) {
+                    displayNetworkDialog();
+                } else {
+                    btnLoginGoogle.performClick();
+                }
             }
         });
         btn_play.setOnClickListener(new View.OnClickListener() {
@@ -284,27 +320,59 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
                 showTutorialIfFirstTime();
             }
         });
-        btn_connect_fb.setOnClickListener(new View.OnClickListener() {
+        btnConnectFb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnLoginFacebook.performClick();
+                if (!NetworkUtils.isNetworkAvailable(StartGameActivity.this)) {
+                    displayNetworkDialog();
+                } else {
+                    btnLoginFacebook.performClick();
+                }
             }
         });
         btnLoginFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(StartGameActivity.this, "Done", Toast.LENGTH_LONG).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showSnackBar(CustomSnackBar.newMessage(getString(R.string.social_network_connection_succeeded,
+                                getString(R.string.general_facebook)))
+                                .setDuration(CustomSnackBar.SNACKBAR_DURATION_SHORT));
+                    }
+                });
+                //Toast.makeText(StartGameActivity.this, "Done", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onCancel() {
-                Toast.makeText(StartGameActivity.this, "Canceled", Toast.LENGTH_LONG).show();
-
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String message = getString(R.string.social_network_connection_canceled, getString(R.string.general_facebook));
+                        int messageTextSize = getResources().getDimensionPixelSize(R.dimen.snackbar_message);
+                        Spannable spannableMessage = new SpannableString(message);
+                        spannableMessage.setSpan(FontManager.Style.O_BOLD, 0, message.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+                        spannableMessage.setSpan(new AbsoluteSizeSpan(messageTextSize), 0, message.length(), 0);
+                        showSnackBar(
+                                CustomSnackBar.newError(spannableMessage)
+                                .setDuration(CustomSnackBar.SNACKBAR_DURATION_SHORT));
+                    }
+                });
+                //Toast.makeText(StartGameActivity.this, "Canceled", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(FacebookException e) {
-                Toast.makeText(StartGameActivity.this, "There was an issue", Toast.LENGTH_LONG).show();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        showSnackBar(CustomSnackBar.newError(getString(R.string.social_network_connection_error,
+                                getString(R.string.general_facebook)))
+                                .setDuration(CustomSnackBar.SNACKBAR_DURATION_SHORT));
+                    }
+                });
+                //Toast.makeText(StartGameActivity.this, "There was an issue", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -322,7 +390,7 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     protected void showTutorialIfFirstTime() {
         startActivity(new Intent(this, TutorialActivity.class));
-        finish();
+        //finish();
         /*screenSeen = authentication.getSharedPreferences(this);
         if (!screenSeen) {
             authentication.setSharedPreferences(true, this);
@@ -362,7 +430,7 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
 
     @Override
     public void onSignInFailed() {
-        btnConnectGoogle.setText("Login");
+        btnConnectGoogle.setText("Connect with");
         presenter.saveGoogleSignIn(false);
     }
 
@@ -371,4 +439,31 @@ public class StartGameActivity extends BaseGameActivity implements View.OnClickL
         btnConnectGoogle.setText("Logout");
         presenter.saveGoogleSignIn(true);
     }
+
+    private void showSnackBar(final CustomSnackBar options) {
+        Log.e("Amrane", "From here 1");
+        final Snackbar snackbar = Snackbar.make(btnConnectFb, options.getMessage(), options.getDuration());
+        Log.e("Amrane", "From here 2");
+        snackbar.getView().setBackgroundColor(ContextCompat.getColor(this, options.getBackgroundColor()));
+        Log.e("Amrane", "From here 3");
+        TextView txt = snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
+        Log.e("Amrane", "From here 4");
+        txt.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+        txt.setTextColor(ContextCompat.getColor(this, options.getTextColor()));
+        txt.setTypeface(FontManager.INSTANCE.getTypeFace(this, FontManager.Style.O_BOLD));
+
+        if (!TextUtils.isEmpty(options.getAction())) {
+            snackbar.setAction(options.getAction(), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (options.getActionListener() != null) {
+                        options.getActionListener().onSnackBarActionPressed();
+                    }
+                }
+            });
+            snackbar.setActionTextColor(ContextCompat.getColor(this, options.getActionTextColor()));
+        }
+        snackbar.show();
+    }
+
 }

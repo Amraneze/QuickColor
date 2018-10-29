@@ -21,19 +21,19 @@
         android:paddingRight="20dp">
 
         <fr.justgame.quickcolor.common.ui.CommonTextView
+            android:id="@+id/tv_score_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_score_label"
-            android:text="Score :"
-            android:textColor="@color/common_grey_text_color"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:layout_marginRight="10dp"
+            android:text="Score :"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:textColor="@color/common_grey_text_color"
             android:textSize="26.67sp"
-            app:font_style="filbert_brush"/>
+            app:font_style="open_sans_bold" />
 
         <fr.justgame.quickcolor.common.ui.CommonTextView
             android:id="@+id/tv_score_point"

@@ -5,6 +5,20 @@
     <color name="colorAccent">#FF4081</color>
     <!--Common-->
     <color name="background">#E6000000</color>
+    <color name="splash_screen_red">#FF4141</color>
+    <color name="splash_screen_red_dark">#993737</color>
+
+    <color name="timer_3_color">#35F7C4</color>
+    <color name="timer_3_color_dark">#2ac59c</color>
+    <color name="timer_2_color">#A8E756</color>
+    <color name="timer_2_color_dark">#86b844</color>
+    <color name="timer_1_color">#FF7900</color>
+    <color name="timer_1_color_dark">#cc6000</color>
+
+    <color name="common_orange">#FF7E2D</color>
+    <color name="common_green">#b8ee82</color>
+    <color name="common_grey">#F5F5F5</color>
+    <color name="common_blue">#000C49</color>
 
     <color name="transparent">#00000000</color>
     <color name="white_menu_transparent">#aaffffff</color>
@@ -26,6 +40,7 @@
     <color name="main_color_light">#03c5f2</color>
     <color name="main_color_deep">#0171c9</color>
     <color name="facebook_color">#3b5998</color>
+    <!--color name="facebook_color">#1B83B8</color-->
     <color name="pressed_grey">#888888</color>
 
     <!--Business-->
@@ -65,6 +80,7 @@
     <color name="grading.red">#e30613</color>
     <color name="snack_success_color">#42a80a</color>
     <color name="snack_error_color">#e30613</color>
+
 
     <color name="primaryColor">#2c3b88</color>
     <color name="primaryColorTransparent">#442c3b88</color>

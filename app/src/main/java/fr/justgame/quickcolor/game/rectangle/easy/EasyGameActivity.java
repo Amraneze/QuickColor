@@ -3,14 +3,19 @@ package fr.justgame.quickcolor.game.rectangle.easy;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.balysv.materialripple.MaterialRippleLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fr.justgame.quickcolor.R;
 import fr.justgame.quickcolor.common.MainGameActivity;
 import fr.justgame.quickcolor.common.ui.CommonButton;
+import fr.justgame.quickcolor.common.ui.CommonTextView;
 import fr.justgame.quickcolor.common.utils.BetterColor;
 
 /**
@@ -19,16 +24,24 @@ import fr.justgame.quickcolor.common.utils.BetterColor;
 
 public class EasyGameActivity extends MainGameActivity {
 
-    @BindView(R.id.btn_top)
-    CommonButton btn_top;
-    @BindView(R.id.btn_buttom)
-    CommonButton btn_buttom;
+    @BindView(R.id.ll_progress_bar)
+    LinearLayout llProgressBar;
+    @BindView(R.id.btn_left)
+    CommonButton btnLeft;
+    @BindView(R.id.btn_right)
+    CommonButton btnRight;
+    @BindView(R.id.iv_failed)
+    ImageView ivFailed;
+    @BindView(R.id.tv_time_is_up)
+    CommonTextView tvTimeIsUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.easy_game_activity);
         ButterKnife.bind(this);
+        initAnimation();
+        setUpUI();
         setupProgressView();
 
         POINT_INCREMENT = 2;
@@ -37,8 +50,8 @@ public class EasyGameActivity extends MainGameActivity {
         gameMode = GameMode.EASY;
         gameType = GameType.RECTANGLE;
 
-        btn_top.setOnClickListener(this);
-        btn_buttom.setOnClickListener(this);
+        btnLeft.setOnClickListener(this);
+        btnRight.setOnClickListener(this);
 
         // bootstrap game
         resetGame();
@@ -46,11 +59,32 @@ public class EasyGameActivity extends MainGameActivity {
         startGame();
     }
 
+    private void initAnimation() {
+        llProgressBar.startAnimation(AnimationUtils.loadAnimation(this, R.anim.slide_down));
+        //llProgressBar.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+    }
+
+    private void setUpUI() {
+        MaterialRippleLayout.on(btnLeft)
+                .rippleAlpha(0.5f)
+                .rippleFadeDuration(500)
+                .rippleOverlay(true)
+                .rippleHover(true)
+                .rippleColor(Color.WHITE)
+                .create();
+        MaterialRippleLayout.on(btnRight)
+                .rippleAlpha(0.5f)
+                .rippleFadeDuration(500)
+                .rippleOverlay(true)
+                .rippleHover(true)
+                .rippleColor(Color.WHITE)
+                .create();
+    }
+
     @Override
     public void onClick(View view) {
         if (!gameStart) return;
         calculatePoints(view);
-        setColorsOnButtons();
     }
 
     protected void setColorsOnButtons() {
@@ -68,24 +102,40 @@ public class EasyGameActivity extends MainGameActivity {
             alpha2 = 255;
         }
 
-        btn_top.setBackgroundColor(Color.argb(alpha1, red, green, blue));
-        btn_buttom.setBackgroundColor(Color.argb(alpha2, red, green, blue));
+        btnLeft.setBackgroundColor(Color.argb(alpha1, red, green, blue));
+        btnRight.setBackgroundColor(Color.argb(alpha2, red, green, blue));
     }
 
     protected void calculatePoints(View clickedView) {
-        View unclickedView = clickedView == btn_top ? btn_buttom : btn_top;
+        View unclickedView = clickedView == btnLeft ? btnRight : btnLeft;
         ColorDrawable clickedColor = (ColorDrawable) clickedView.getBackground();
         ColorDrawable unClickedColor = (ColorDrawable) unclickedView.getBackground();
-        //Log.e("calculatePoints", clickedColor.getAlpha() + " " +unClickedColor.getAlpha());
         int alpha1 = Color.alpha(clickedColor.getColor());
         int alpha2 = Color.alpha(unClickedColor.getColor());
-        //Log.e("calculatePoints", "alpha1 " + alpha1 +" " +alpha2);
 
-        // correct guess
         if (alpha1 < alpha2) {
+            setColorsOnButtons();
             updatePoints();
-        } else { // incorrect guess
-            endGame();
+        } else {
+            ivFailed.setVisibility(View.VISIBLE);
+            ivFailed.setAnimation(AnimationUtils.loadAnimation(this, R.anim.fade_in));
+            uiHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    endGame();
+                }
+            }, 1000);
         }
+    }
+
+    @Override
+    protected void onTimeIsUp() {
+        tvTimeIsUp.setVisibility(View.VISIBLE);
+        uiHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                endGame();
+            }
+        }, 1000);
     }
 }

@@ -1,223 +1,219 @@
-<LinearLayout android:id="@+id/lay_container"
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lay_container"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
-    xmlns:strokeAttrs="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/start_game_background"
+    android:background="@drawable/bkg_home"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_start_game"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:clickable="true"
-        android:gravity="bottom"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/iv_logo"
-            android:layout_width="258dp"
-            android:layout_height="159dp"
-            android:layout_gravity="center_vertical|center_horizontal|center"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/logo" />
+        android:layout_height="match_parent"
+        android:background="@drawable/bkg_home">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ll_score"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp">
+            android:gravity="bottom"
+            android:layout_gravity="bottom"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:id="@+id/ll_actual_score">
+                android:orientation="horizontal">
 
-                <fr.justgame.quickcolor.common.ui.CommonTextView
-                    android:id="@+id/tv_actual_score_title"
-                    android:layout_width="wrap_content"
+                <FrameLayout
+                    android:id="@+id/fl_facebook_signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.facebook.login.widget.LoginButton
+                        android:id="@+id/login_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <fr.justgame.quickcolor.common.ui.CommonButton
+                        android:id="@+id/btn_connect_fb"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@drawable/btn_facebook"
+                        android:drawableEnd="@drawable/ic_qc_facebook_icon"
+                        android:drawablePadding="-50dip"
+                        android:paddingEnd="30dp"
+                        android:text="Connect with"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="16sp"
+                        app:font_style="open_sans_bold" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/fl_google_signin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <com.google.android.gms.common.SignInButton
+                        android:id="@+id/sign_in_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" />
+
+                    <fr.justgame.quickcolor.common.ui.CommonButton
+                        android:id="@+id/btn_connect_google"
+                        android:layout_width="match_parent"
+                        android:layout_height="70dp"
+                        android:background="@drawable/btn_google"
+                        android:drawableEnd="@drawable/ic_google_plus"
+                        android:drawablePadding="-30dip"
+                        android:gravity="center"
+                        android:paddingEnd="30dp"
+                        android:text="Connect with"
+                        android:textAlignment="center"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="16sp"
+                        app:font_style="open_sans_bold" />
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                ads:adSize="SMART_BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id">
+            </com.google.android.gms.ads.AdView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_start_game"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:paddingTop="40dp">
+
+            <ImageView
+                android:id="@+id/iv_logo"
+                android:layout_width="258dp"
+                android:layout_height="159dp"
+                android:layout_gravity="center"
+                android:background="@drawable/logo" />
+
+            <LinearLayout
+                android:id="@+id/ll_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/ll_actual_score"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Your Score"
-                    android:textColor="#FF4D4D4D"
-                    android:textSize="23.33sp"
-                    app:font_style="filbert_brush" />
+                    android:orientation="vertical">
 
+                    <fr.justgame.quickcolor.common.ui.CommonTextView
+                        android:id="@+id/tv_actual_score_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Score"
+                        android:textColor="@color/white"
+                        android:textSize="23.33sp"
+                        app:font_style="open_sans_bold" />
 
-                <fr.justgame.quickcolor.common.ui.TextViewOutline
-                    android:id="@+id/tv_actual_score"
+                    <fr.justgame.quickcolor.common.ui.TextViewOutline
+                        android:id="@+id/tv_actual_score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:shadowColor="@android:color/darker_gray"
+                        android:shadowRadius="1"
+                        android:text="26 111"
+                        android:textColor="#FFFF5C5C"
+                        android:textSize="60sp"
+                        app:font_style="open_sans_bold_italic"
+                        app:outlineColor="@android:color/white"
+                        app:outlineSize="5sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_high_score"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:shadowColor="@android:color/darker_gray"
-                    android:shadowRadius="1"
-                    android:text="26 111"
-                    android:textColor="#FFFF5C5C"
-                    android:textSize="60sp"
-                    app:font_style="open_sans_bold_italic"
-                    app:outlineColor="@android:color/white"
-                    app:outlineSize="5sp" />
+                    android:orientation="horizontal">
+
+                    <fr.justgame.quickcolor.common.ui.CommonTextView
+                        android:id="@+id/tv_best_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Best score : "
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        app:font_style="open_sans_semi_bold" />
+
+                    <fr.justgame.quickcolor.common.ui.CommonTextView
+                        android:id="@+id/tv_score"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:shadowColor="@android:color/darker_gray"
+                        android:shadowRadius="1"
+                        android:text="26 111"
+                        android:textColor="@color/white"
+                        android:textSize="30sp"
+                        app:font_style="open_sans_bold_italic"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/ll_high_score"
+            <fr.justgame.quickcolor.common.ui.CommonButton
+                android:id="@+id/btn_play"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rectangle_button"
+                android:elevation="20dp"
+                android:text="Play"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                app:font_style="open_sans_bold_italic" />
 
-                <ImageView
-                    android:id="@+id/iv_trophy"
-                    android:layout_width="42.67dp"
-                    android:layout_height="48dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/ic_trophy"
-                    android:gravity="center" />
-
-                <fr.justgame.quickcolor.common.ui.CommonTextView
-                    android:id="@+id/tv_best_score"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Best Score"
-                    android:textColor="#FF4D4D4D"
-                    android:textSize="23.33sp"
-                    app:font_style="filbert_brush" />
-
-            </LinearLayout>
-
-            <fr.justgame.quickcolor.common.ui.TextViewOutline
-                android:id="@+id/tv_score"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:shadowColor="@android:color/darker_gray"
-                android:shadowRadius="1"
-                android:text="26 111"
-                android:textColor="#FFFF5C5C"
-                android:textSize="30sp"
-                app:font_style="open_sans_bold_italic"
-                app:outlineColor="@android:color/white"
-                app:outlineSize="5sp" />
 
         </LinearLayout>
 
-        <fr.justgame.quickcolor.common.ui.SpecialButton
-            android:id="@+id/btn_play"
-            android:layout_width="233.33dp"
-            android:layout_height="66.67dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/rounded_button"
-            android:text="Play now!"
-            android:textColor="@color/white"
-            android:textSize="40sp"
-            fbutton:buttonColor="@color/common_red"
-            fbutton:cornerRadius="50dp"
-            fbutton:shadowColor="@color/red"
-            fbutton:shadowEnabled="true"
-            fbutton:shadowHeight="3dp"
-            fbutton:specialButtonText="filbert_brush"
-            android:layout_marginTop="10dp" />
-
-        <FrameLayout
-            android:id="@+id/fl_facebook_signin"
+        <fr.justgame.quickcolor.common.ui.PaperAnimationView
+            android:id="@+id/animated_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="top|center_horizontal"
+            android:visibility="visible" />
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+    </FrameLayout>
 
-            <fr.justgame.quickcolor.common.ui.SpecialButton
-                android:id="@+id/btn_connect_fb"
-                android:layout_width="180dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_qc_facebook_icon"
-                android:background="@drawable/rounded_button"
-                android:gravity="center"
-                android:text="Login"
-                android:textAlignment="center"
-                android:textColor="#FFFFFFFF"
-                android:textSize="16sp"
-                app:font_style="open_sans_bold"
-                fbutton:buttonColor="@color/facebook_color"
-                fbutton:cornerRadius="50dp"
-                fbutton:shadowColor="@color/primaryColor"
-                fbutton:shadowEnabled="true"
-                fbutton:shadowHeight="3dp"
-                fbutton:specialButtonText="filbert_brush" />
-
-        </FrameLayout>
-
-
-        <FrameLayout
-            android:id="@+id/fl_google_signin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-
-            <com.google.android.gms.common.SignInButton
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-            <fr.justgame.quickcolor.common.ui.SpecialButton
-                android:id="@+id/btn_connect_google"
-                android:layout_width="180dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:drawableStart="@drawable/ic_google_plus"
-                android:background="@drawable/rounded_button"
-                android:gravity="center"
-                android:text="Login"
-                android:textAlignment="center"
-                android:textColor="#FFFFFFFF"
-                android:textSize="16sp"
-                app:font_style="open_sans_bold"
-                fbutton:buttonColor="@color/common_red"
-                fbutton:cornerRadius="50dp"
-                fbutton:shadowColor="@color/red"
-                fbutton:shadowEnabled="true"
-                fbutton:shadowHeight="3dp"
-                fbutton:specialButtonText="filbert_brush" />
-
-
-        </FrameLayout>
-
-    </LinearLayout>
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:ads="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-
-        <com.google.android.gms.ads.AdView
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|center_horizontal"
-            ads:adSize="SMART_BANNER"
-            ads:adUnitId="@string/banner_ad_unit_id">
-
-        </com.google.android.gms.ads.AdView>
-    </RelativeLayout>
 </LinearLayout>
