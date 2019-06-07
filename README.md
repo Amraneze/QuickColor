@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RAH_Sab_Console.prj
 {
-    class Program
+ class Program
     {
         static void Main(string[] args) {
         //variables
@@ -79,7 +79,11 @@ namespace RAH_Sab_Console.prj
             Console.WriteLine("Note " + i + " : " + notes[i]);
         }
         
-        Etudiant etudiant = new Etudiant(nom, prenom, anneeNaissance, age, notes);
+        Etudiant etudiant = new Etudiant(nom, prenom, anneeNaissance, notes);
+        double meilleureNote = etudiant.MeilleureNote();
+        Console.WriteLine("La meilleure note est " + meilleureNote);
+        double moyenneNote = etudiant.MoyenneNotes();
+        Console.WriteLine("La moyenne des notes est " + moyenneNote);
     }
             
     static double[] SaisieNotes(int n) {
@@ -94,8 +98,7 @@ namespace RAH_Sab_Console.prj
         Console.ReadKey();
         return doubles;
     }
-}
-
+    
 class Etudiant {
     String nom;
     String prenom;
@@ -103,12 +106,32 @@ class Etudiant {
     int age;
     private double[] notes;
     
-    public Etudiant(String nom, String prenom, int anneeNaissance, int age, double[] notes) {
+    public Etudiant(String nom, String prenom, int anneeNaissance, double[] notes) {
         this.nom = nom;
         this.prenom = prenom;
         this.anneeNaissance = anneeNaissance;
-        this.age = age;
+        this.age = 2019 - anneeNaissance;
         this.notes = notes;
     }
+    
+    public double MeilleureNote() {
+        double max = 0;
+        for (int i=0; i<notes.Length; i++) {
+            if (notes[i] >= max) {
+                max = notes[i];
+            }
+        }
+        return max;
+    }
+    
+    public double MoyenneNotes() {
+        double moyenne = 0;
+        for (int i=0; i<notes.Length; i++) {
+            moyenne += notes[i];
+        }
+        return moyenne/notes.Length;
+    }
+    
+}   
     
 }
